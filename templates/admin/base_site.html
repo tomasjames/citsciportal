@@ -1,12 +1,51 @@
 {% extends "admin/base.html" %}
-{% load i18n %}
+{% load i18n admin_static %}
 
 {% block title %}{{ title }} | {% trans 'LCOGT Citizen Science admin' %}{% endblock %}
-{% block extrastyle %}<link rel="stylesheet" href="{{MEDIA_URL}}css2/portal.css" type="text/css" />
+{% block extrastyle %}
 {%endblock%}
 
-{% block branding %}
-<h1 id="site-name">{% trans 'LCOGT Citizen Science admin' %}</h1>
-{% endblock %}
 
 {% block nav-global %}{% endblock %}
+<!---------------->
+
+
+{# {#Additional <head> content here #}
+{% block extrahead %}
+    {{ block.super }}
+{% endblock %}
+
+
+{# Additional <head> content here, some extra meta tags or favicon #}
+{#{% block extrahead %}#}
+{#{% endblock %}#}
+
+
+{# Additional JS files in footer, right before </body> #}
+{#{% block extrajs %}#}
+{#  <script type="text/javascript" src="{% static 'js/my_project.js' %}"></script>#}
+{#{% endblock %}#}
+
+
+{# Footer links (left side) #}
+{% block footer_links %}
+{% endblock %}
+
+
+{# Footer branding name (center) #}
+{% block footer_branding %}
+{% endblock %}
+
+
+{# Footer copyright (right side) #}
+{% block copyright %}
+© Las Cumbres Observatory Global Telescope Network 2013
+{% endblock %}
+
+
+{% block branding %}
+<h1 id="site-name"><a href="/admin/">Agent Exoplanet admin</a></h1>
+{% endblock %}
+
+{% block header_content %}
+{% endblock %}

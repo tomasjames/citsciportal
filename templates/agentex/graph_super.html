@@ -5,14 +5,14 @@
 {%block header %}Transit Lightcurve of {{event.title}}{%endblock%}
 
 {% block script-content %}
-	<script language="javascript" type="text/javascript" src="{{ MEDIA_URL }}js/agentex.js"></script>
-	<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="{{ MEDIA_URL }}js/excanvas.js"></script><![endif]-->
-	<script language="javascript" type="text/javascript" src="{{ MEDIA_URL }}js/sylvester-min.js"></script>
-	<script language="javascript" type="text/javascript" src="{{ MEDIA_URL }}js/optimize.js"></script>
-	<script language="javascript" type="text/javascript" src="{{ MEDIA_URL }}js/jquery.graph.js"></script>
-	<script language="javascript" type="text/javascript" src="{{ MEDIA_URL }}js/lightcurve.js"></script>
-	<script language="javascript" type="text/javascript" src="{{ MEDIA_URL }}js/raphael.js"></script>
-	<script language="javascript" type="text/javascript" src="{{ MEDIA_URL }}js/planetarymodel.js"></script>
+	<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/agentex.js"></script>
+	<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/excanvas.js"></script><![endif]-->
+	<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/sylvester-min.js"></script>
+	<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/optimize.js"></script>
+	<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/jquery.graph.js"></script>
+	<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/lightcurve.js"></script>
+	<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/raphael.js"></script>
+	<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/planetarymodel.js"></script>
 
 	<script type="text/javascript">
 	<!--
@@ -36,7 +36,7 @@
 		$('.breadcrumb').after(html);
 
 		if($('table#datatable').length > 0){
-			$('table#datatable').before('<div id="tabletoggle" style="float:left;cursor:pointer;"><img src="{{MEDIA_URL}}images/table_icon&24.png" alt="toggle table" title="Show or hide the data table" style="width:16px;margin-right:0px;" \/> toggle data table<\/div><br style="clear:both;" />')
+			$('table#datatable').before('<div id="tabletoggle" style="float:left;cursor:pointer;"><img src="{{STATIC_URL}}images/table_icon&24.png" alt="toggle table" title="Show or hide the data table" style="width:16px;margin-right:0px;" \/> toggle data table<\/div><br style="clear:both;" />')
 			$('#tabletoggle').bind('click',function(){
 				$('table.accessible').toggle();
 			})
@@ -114,15 +114,15 @@
 {% if user.is_authenticated %}
 <!--
 		<ol class="breadcrumb">
-			<li><a href="{%url my-graph event.name%}"><img src="{{ MEDIA_URL }}images/graph_my.png" alt="My" title="View my measurements as a lightcurve" />Step 1: My measurements</a></li>
-			<li><a href="{%url average-graph event.name%}"><img src="{{ MEDIA_URL }}images/graph_ave.png" alt="Classify" title="Classify your lightcurves" />Step 2: Classify lightcurves</a></li>
-			<li class="active"><a href="{%url super-graph event.name%}"><img src="{{ MEDIA_URL }}images/graph_super.png" alt="Final" title="Final lightcurve" />Step 3: Final lightcurve</a></li>
+			<li><a href="{%url my-graph event.name%}"><img src="{{ STATIC_URL }}images/graph_my.png" alt="My" title="View my measurements as a lightcurve" />Step 1: My measurements</a></li>
+			<li><a href="{%url average-graph event.name%}"><img src="{{ STATIC_URL }}images/graph_ave.png" alt="Classify" title="Classify your lightcurves" />Step 2: Classify lightcurves</a></li>
+			<li class="active"><a href="{%url super-graph event.name%}"><img src="{{ STATIC_URL }}images/graph_super.png" alt="Final" title="Final lightcurve" />Step 3: Final lightcurve</a></li>
 		</ol>
 -->
 		<p class="breadcrumb"></p>
-		<div id="mylink" style="display:none;"><a href="{%url my-graph event.name%}"><img src="{{ MEDIA_URL }}images/graph_my.png" alt="My" title="View my measurements as a lightcurve" /></a></div>
-		<div id="avlink" style="display:none;"><a href="{%url average-graph event.name%}"><img src="{{ MEDIA_URL }}images/graph_ave.png" alt="Classify" title="Classify your lightcurves" /></a></div>
-		<div id="sulink" class="tabactive" style="display:none;"><a href="{%url super-graph event.name%}"><img src="{{ MEDIA_URL }}images/graph_super.png" alt="Final" title="Final lightcurve" /></a></div>
+		<div id="mylink" style="display:none;"><a href="{%url my-graph event.name%}"><img src="{{ STATIC_URL }}images/graph_my.png" alt="My" title="View my measurements as a lightcurve" /></a></div>
+		<div id="avlink" style="display:none;"><a href="{%url average-graph event.name%}"><img src="{{ STATIC_URL }}images/graph_ave.png" alt="Classify" title="Classify your lightcurves" /></a></div>
+		<div id="sulink" class="tabactive" style="display:none;"><a href="{%url super-graph event.name%}"><img src="{{ STATIC_URL }}images/graph_super.png" alt="Final" title="Final lightcurve" /></a></div>
 {% else %}
 		<p class="breadcrumb">You can contribute measurements to this lightcurve after <a href="{% url register %}?next={{ request.path }}">creating an account.</a> If you already have an account <a href="{% url django.contrib.auth.views.login %}?next={{ request.path }}">log in</a></p>
 {% endif %}
