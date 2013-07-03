@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block extrahead %}
-	<link rel="stylesheet" href="{{MEDIA_URL}}css2/agentex.css" type="text/css" media="screen,print" />
+	<link rel="stylesheet" href="{{STATIC_URL}}css2/agentex.css" type="text/css" media="screen,print" />
 	<style>
 	.dashboard #content { width: auto; }
 	#lightcurves { width: 600px; }
@@ -68,9 +68,9 @@
 		background: #bbbbbb;
 	}
 	</style>
-	<script type="text/javascript" src="{{MEDIA_URL}}js/jquery.min.js"></script>
-	<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="{{ MEDIA_URL }}js/excanvas.js"></script><![endif]-->
-	<script language="javascript" type="text/javascript" src="{{ MEDIA_URL }}js/jquery.graph.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}js/jquery.min.js"></script>
+	<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/excanvas.js"></script><![endif]-->
+	<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/jquery.graph.js"></script>
 	<script type="text/javascript" charset="utf-8">
 	<!--
 	function Calibrators(){
@@ -284,7 +284,7 @@
 		if(d == "other") return "R";
 	}
 	Calibrator.prototype.decisionImage = function(d){
-		return '<img title="Classified as '+d+'" alt="'+d+'" src="{{MEDIA_URL}}images/choice_'+d+'.png">';
+		return '<img title="Classified as '+d+'" alt="'+d+'" src="{{STATIC_URL}}images/choice_'+d+'.png">';
 	}
 
 

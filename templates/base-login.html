@@ -6,9 +6,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="DC.Title" content="Las Cumbres Observatory Global Telescope Network" />
 	<link rel="shortcut icon" href="http://lcogt.net/sites/default/themes/zen/lcogt/favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" href="{{MEDIA_URL}}css2/lcogt.css" type="text/css">{% block css-content %}{% endblock %}
-	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.min.js"></script>
-	<script type="text/javascript" src="{{ MEDIA_URL }}js/agentex.js"></script>{% block script-content %}{% endblock %}
+	<link rel="stylesheet" href="{{STATIC_URL}}css2/lcogt.css" type="text/css">{% block css-content %}{% endblock %}
+	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/agentex.js"></script>{% block script-content %}{% endblock %}
 	<script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -39,8 +39,8 @@
 		
 				<div id="container">
 		
-					{% block logo-content %}<div id="logo"><a href="{% url portal %}" title="Citizen Science Home" rel="home"><img src="{{MEDIA_URL}}images/citsci-logo2.png" alt="Home" id="logo-image" /></a></div>{% endblock %}
-					<div id="logo2"><a href="http://lcogt.net" title="LCOGT Home" rel="home"><img src="{{MEDIA_URL}}images/logo-gray-poweredby.png" alt="Home" id="logo-image" /></a></div>
+					{% block logo-content %}<div id="logo"><a href="{% url portal %}" title="Citizen Science Home" rel="home"><img src="{{STATIC_URL}}images/citsci-logo2.png" alt="Home" id="logo-image" /></a></div>{% endblock %}
+					<div id="logo2"><a href="http://lcogt.net" title="LCOGT Home" rel="home"><img src="{{STATIC_URL}}images/logo-gray-poweredby.png" alt="Home" id="logo-image" /></a></div>
 		
 					{% block navbar %}
 					<div id="navbar" class="primary clear-block">

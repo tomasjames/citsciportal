@@ -8,6 +8,12 @@ from django.views.generic.simple import redirect_to
 from django.contrib import admin
 admin.autodiscover()
 
+# import xadmin
+# xadmin.autodiscover()
+# 
+# from xadmin.plugins import xversion
+# xversion.registe_models()
+
 urlpatterns = patterns('',
 #    (r'^api/', include('odin.api.urls')),
     url(r'^$','agentex.views.home',name='portal'),
@@ -29,8 +35,6 @@ urlpatterns = patterns('',
 )
 
 if settings.LOCAL_DEVELOPMENT:
-    urlpatterns += patterns("django.views",
-        url(r"%s(?P<path>.*)/$" % settings.MEDIA_URL[1:], "static.serve", {
-            "document_root": settings.MEDIA_ROOT,
-        })
+    urlpatterns += patterns('django.contrib.staticfiles.views',
+        url(r'^%s(?P<path>.*)$' % settings.STATIC_URL[1:], 'serve'),
     )
