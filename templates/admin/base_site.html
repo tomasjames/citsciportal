@@ -1,5 +1,5 @@
 {% extends "admin/base.html" %}
-{% load i18n admin_static %}
+{% load i18n admin_static admin_urls %}
 
 {% block title %}{{ title }} | {% trans 'LCOGT Citizen Science admin' %}{% endblock %}
 {% block extrastyle %}
@@ -44,7 +44,7 @@
 
 
 {% block branding %}
-<h1 id="site-name"><a href="/admin/">Agent Exoplanet admin</a></h1>
+<h1 id="site-name"><a href="{% url admin:index %}">Agent Exoplanet admin</a></h1>
 {% endblock %}
 
 {% block header_content %}

@@ -315,7 +315,7 @@ def addvalue(request,code):
             else:
                 planet = Event.objects.get(name=code)
                 mylist = Datapoint.objects.filter(user=person,pointtype='S',data__event=planet).values_list('data',flat=True)
-                print mylist
+                #print mylist
                 ### if person does not have a DataCollection it is their first measurement
                 if (DataCollection.objects.filter(planet=planet,person=person).count() == 0):
                     d = DataSource.objects.filter(event=planet,id=planet.finder)[0]
@@ -779,7 +779,6 @@ def graphview(request,code,mode,calid):
         now = datetime.now()
         cals,normcals,sb,bg,dates,stamps,ids,cats = photometry(code,o.user,progress) 
         numcals = len(normcals)
-        print normcals
         for i,id in enumerate(ids):
             #mycalibs = []
             calibs = []
@@ -1422,13 +1421,15 @@ def photometry(code,person,progress=False,admin=False):
     cals,sc,bg,times,ids,cats = calibrator_averages(code,person,progress)
     indexes = [int(i) for i in ids]
     #sc = array(sc)
-    #bg = array(bg)     
+    #bg = array(bg)  
     for cal in cals:
-        val = (sc - bg)/(cal-bg)
-        maxval = mean(r_[val[:3],val[-3:]])
-        maxvals.append(maxval)
-        norm = val/maxval
-        normcals.append(list(norm))
+        if len(cal) == progress['total']:
+        #### Do not attempt to do the photmetry where the number of calibrators does not match the total
+            val = (sc - bg)/(cal-bg)
+            maxval = mean(r_[val[:3],val[-3:]])
+            maxvals.append(maxval)
+            norm = val/maxval
+            normcals.append(list(norm))
         # Find my data and create unix timestamps
     unixt = lambda x: timegm(x.timetuple())+1e-6*x.microsecond
     iso = lambda x: x.isoformat(" ")
