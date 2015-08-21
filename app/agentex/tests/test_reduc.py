@@ -4,39 +4,34 @@ from django.test import TestCase, Client
 # Import reverse
 from django.core.urlresolvers import reverse
 
-# Import Client (acts as a dummy browser allowing testing)
-from django.test import client
-
 # Import Mock to allow for function calls
 from mock import Mock, patch
 
 # Import view required
 from agentex.datareduc import *
-
-'''
-Mock objects live here.
-'''
-
-def mocking_calave():
-    cals, sc, bg, stamps, ids, cats = 1, 1, 1, 1, 1, 1
-    return cals,sc,bg,stamps,ids,cats
+from agentex.views import *
+from agentex.models import *
 
 '''
 Actual tests live here.
 '''
 
 class TestCalibratorData(TestCase):
-
-    def setUp(self):
-        self.client = Client()
-
+    
+    '''
+    This tests the function calibrator_data from datareduc.py
+    '''
+    
     def test_calibrator_data(self):
 
-        calid = None
-        code = 'testing'
-
-        d, t, p = calibrator_data(calid,code)
-        self.assertNotEqual(calibrator, [])
+        calid = 1.
+        code = 'corot2b'
+        return_collection = calibrator_data(calid,code)
+        data = return_collection[0]
+        time = return_collection[1]
+        people = return_collection[2]
+        
+        self.assertIsNotNone(data)
 
 '''
 class TestAverageCombine(TestCase):
