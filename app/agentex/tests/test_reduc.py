@@ -14,7 +14,7 @@ from agentex.models import *
 
 '''
 Actual tests live here.
-'''
+
 
 class TestCalibratorData(TestCase):
     
@@ -33,7 +33,6 @@ class TestCalibratorData(TestCase):
         
         self.assertIsNotNone(data)
 
-'''
 class TestAverageCombine(TestCase):
 
     def setUp(self):
