@@ -32,7 +32,7 @@ import urllib2
 from xml.dom.minidom import parse
 from math import sin,acos,fabs,sqrt
 from numpy import *
-from astropy.io import fits 
+from astropy.io import fits
 from datetime import datetime,timedelta
 from calendar import timegm
 from time import mktime
@@ -49,12 +49,16 @@ import agentex.dataset as ds
 from django.conf import settings
 from agentex.agentex_settings import planet_level
 
-def calibrator_data(calid,code):
+from agentex.views import *
+
+def calibrator_data(sources,times,points,people,calid,code):
     data = []
+    '''
     sources, times = zip(*DataSource.objects.filter(event__name=code).values_list('id','timestamp').order_by('timestamp'))
     points  = Datapoint.objects.filter(data__in=sources)
     #points.filter(pointtype='C').values('data__id','user','value')
     people = Decision.objects.filter(source__id=calid,planet__name=code,value='D',current=True).values_list('person__username',flat=True).distinct()
+    '''
     norm = dict((key,0) for key in sources)
     for pid in people:
         cal = []
@@ -152,22 +156,22 @@ def calibrator_averages(code,person=None,progress=False):
     return cals,sc,bg,stamps,ids,cats
 
 def photometry(code,person,progress=False,admin=False):
-    
+
     # Empty lists to store normalised calibrators and maximum values
     normcals = []
     maxvals = []
 
     # Call in averages
     cals,sc,bg,times,ids,cats = calibrator_averages(code,person,progress)
-    
+
     indexes = [int(i) for i in ids]
     #sc = array(sc)
-    #bg = array(bg)     
-    
+    #bg = array(bg)
+
     # Iterate over every calibrator
     for cal in cals:
         if len(cal) == progress['total']:
-            #### Do not attempt to do the photmetry where the number of calibrators does not match the total        
+            #### Do not attempt to do the photmetry where the number of calibrators does not match the total
                 # Determine calibrated flux from source
                 val = (sc - bg)/(cal-bg)
                 # Determine maximum flux from source
@@ -229,7 +233,7 @@ def addvalidset(request,code):
                         value=value,
                         person=o.user,
                         planet=planet)
-        
+
         if choice2:
             value2 = decisions[choice2]
             decision2 = Decision(source=source,
@@ -244,7 +248,7 @@ def addvalidset(request,code):
         return False
     else:
         return True
-        
+
 @login_required
 def my_data(o,code):
     data = []

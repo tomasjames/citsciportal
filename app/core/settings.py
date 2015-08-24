@@ -119,7 +119,6 @@ TEMPLATES = [
     },
 ]
 
-
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -157,14 +156,13 @@ DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.redirects.RedirectsPanel',
 )
 
->>>>>>> 004533ac67f7ecfd030111408c053aa9f6dd5ee9
 LOGIN_REDIRECT_URL = 'http://lcogt.net/agentexoplanet/'
 LOGIN_URL = 'http://lcogt.net/agentexoplanet/account/login/'
 
-
+'''
 SESSION_COOKIE_DOMAIN='lcogt.net'
 SESSION_COOKIE_NAME='agentexoplanet.sessionid'
-
+'''
 
 BASE_URL = "/agentexoplanet/"
 
