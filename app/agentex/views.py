@@ -1695,10 +1695,17 @@ def calstats(user,planet,decs):
 
 def supercaldata(user,planet):
 
+    # The commented out elements within this function are the original function. It
+    # (and calstats) were originally one function. To restore functionality, simply
+    # delete calstats and uncomment the code embraced in ''' here (and remove the
+    # return statement at the bottom of the page).
+
+    '''
     # Create empty list to store calibrators and datapoints
-    #calibs = []
-    #mypoints = []
+    calibs = []
+    mypoints = []
     #ti = 0.
+    '''
 
     # assume data which has Decisions forms part of a complete set
     # People and their sources who have Dips in the select planet
@@ -1871,11 +1878,18 @@ def update_web_pref(request,setting):
         return HttpResponse("Setting changed to use manual view")
     else:
         return HttpResponse("Setting unchanged")
+
 '''
+Tester has been commented out to allow py.test to run (peculiar error was encountered
+when trying to run with it: apps aren't loaded yet). If required for any reason, simply
+uncomment both this function and the url in urls.py (don't forget the import statements
+at the top of urls.py).
+
 def tester(request):
     #return render_to_response('agentex/test.html')
     return render(request, 'agentex/test.html', {})
 '''
+
 def average_sources(code):
     typep = ('S','C','B')
     ds = DataSource.objects.filter(name=code)
