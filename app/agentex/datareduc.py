@@ -51,14 +51,12 @@ from agentex.agentex_settings import planet_level
 
 from agentex.views import *
 
-def calibrator_data(sources,times,points,people,calid,code):
+def calibrator_data(calid,code):
     data = []
-    '''
     sources, times = zip(*DataSource.objects.filter(event__name=code).values_list('id','timestamp').order_by('timestamp'))
     points  = Datapoint.objects.filter(data__in=sources)
     #points.filter(pointtype='C').values('data__id','user','value')
     people = Decision.objects.filter(source__id=calid,planet__name=code,value='D',current=True).values_list('person__username',flat=True).distinct()
-    '''
     norm = dict((key,0) for key in sources)
     for pid in people:
         cal = []

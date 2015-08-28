@@ -41,6 +41,7 @@ from time import mktime
 from xml.dom.minidom import parse
 import json
 import urllib2
+from django.db.models import Q
 
 from agentex.models import Target, Event, Datapoint, DataSource, DataCollection,CatSource, Decision, Achievement, Badge, Observer, AverageSet
 from agentex.models import decisions
@@ -1006,13 +1007,14 @@ def graphview_advanced(request,code,mode,calid):
 
     return render(request, 'agentex/graph_advanced.html', {'event':Event.objects.filter(name=code)[0],
                                                                     'framedata':line,
-                                                                    'target':DataSource.objects.filter(event__name=code)[0].target,
-                                                                    'progress' : progress})
+                                                                    'target':DataSource.objects.filter(event__name=code)[0].target,                                                                    'progress' : progress})
 '''
 def graphsuper(request,code):
     # Construct the supercalibrator lightcurve
     ds1 = ds.Dataset(planetid=code,userid=request.user.username)
     data = ds1.final()
+    print data
+    print ds1.target
     ###### Setting nodata to True and not showing each person their own data, but just for now
     return render(request, 'agentex/graph_super.html', {'event':ds1.planet,
                                                                 'data':data,
@@ -1020,7 +1022,6 @@ def graphsuper(request,code):
                                                                 'target':ds1.target,
                                                                 'nodata' : True})
 '''
-
 def datagen(code,user):
 
     # Extract name of exoplanet from the dataset
@@ -1061,6 +1062,8 @@ def graphsuper(request,code):
 
     # Call datagen to generate realtime data
     data = datagen(code,user)
+    #print data
+    #print target
 
     ###### Setting nodata to True and not showing each person their own data, but just for now
     return render(request, 'agentex/graph_super.html', {'event':event,
@@ -1257,7 +1260,7 @@ def measurementsummary(request,code,format):
     elif (format == 'xhr' and options == 'super'):
         # Construct the supercalibrator lightcurve
         planet = Event.objects.filter(name=code)[0]
-        numsuper, normvals, std,radiusratio = supercaldata(planet)
+        numsuper, normvals, std,radiusratio = supercaldata(user,planet)
         sources = DataSource.objects.filter(event=planet).order_by('timestamp')
         dates = []
         for s in sources:
@@ -1559,20 +1562,16 @@ def calstats(user,planet,decs):
     sources = set(sourcelst)
 
     # Import entire Datapoint database and sort by timestamp
-    #db = Datapoint.objects.filter(ident=planet).values_list().order_by('tstamp')
-    db = Datapoint.objects.filter(data__event=planet).values_list().order_by('data__timestamp')
-    print planet
-    print db
+    db = Datapoint.objects.filter(ident=planet).values_list().order_by('tstamp')
 
     # Convert to numpy array
     dp_array = array(db)
-    print dp_array
 
     # Read in all values of calibrators
     calvals_data = Datapoint.objects.values_list('data','user_id','coorder__source','value').filter(coorder__source__in=sources,pointtype='C',coorder__source__final=True,coorder__complete=True,coorder__display=True).order_by('tstamp')
 
     # Convert to numpy array
-    calvals_array = array(calvals_data)
+    calvals_array = array(vstack(calvals_data))
 
     # Iterate over each person
     for p in people:
@@ -1590,7 +1589,7 @@ def calstats(user,planet,decs):
             continue
 
         # Query vals to extract average values
-        # NB. vals[:,6]=='S' and vals[:,6]=='B' extract the entries from vals that have pointtype=='S' and 'B' in column 6. sc_extract[:,4] and bg_extract[:,4] pulls the exact source and background values for those entries from column 4
+        # vals[:,6]=='S' and vals[:,6]=='B' extract the entries from vals that have pointtype=='S' and 'B' in column 6. sc_extract[:,4] and bg_extract[:,4] pulls the exact source and background values for those entries from column 4
         sc_extract = vals[vals[:,6]=='S']
         sc = sc_extract[:,4]
 
@@ -1615,7 +1614,9 @@ def calstats(user,planet,decs):
             # if settings.LOCAL_DEVELOPMENT: print "\033[94mWe have calibrators\033[1;m"
 
             # Stacks the values
+            calstack = array([])
             calstack = vstack(calslist)
+            #print 'calstack=',calstack
 
             # This throws a wobbly sometimes
             cc = (sc-bg)/(calstack-bg)
@@ -1632,18 +1633,25 @@ def calstats(user,planet,decs):
     norm_a = lambda a: mean(r_[a[:3],a[-3:]])
     mycals = []
 
+    #print 'calibs=', calibs
+
     try:
         # Stacks all of the calibrators
         cala = vstack(calibs)
+        #print 'cala=', cala
 
         # Normalises stacked calibrators
         norms = apply_along_axis(norm_a, 1, cala)
+        #print 'norms=', norms
 
         # Determines the length of the stacked calibrators
         dim = len(cala)
+        #print 'dim=', dim
 
         # Normalises the calibrators
         norm1 = cala/norms.reshape(dim,1)
+        #print 'norms.reshape(dim,1)=', norms.reshape(dim,1)
+        #print 'norm1=', norm1
 
         # Empty list to store calibrators
         mynorm1=[]
@@ -1700,6 +1708,8 @@ def supercaldata(user,planet):
 
     # Pull all of the decisions into an object
     decs = Decision.objects.values_list('person','source').filter(value='D', current=True, planet=planet, source__datacollection__display=True).annotate(Count('source'))
+    #print 'decs=', decs
+    #print len(decs)
     #decs = Decision.objects.raw('SELECT person,source FROM agentex_decision')
 
     # Counts the number of decisions
@@ -1858,11 +1868,11 @@ def update_web_pref(request,setting):
         return HttpResponse("Setting changed to use manual view")
     else:
         return HttpResponse("Setting unchanged")
-
+'''
 def tester(request):
     #return render_to_response('agentex/test.html')
     return render(request, 'agentex/test.html', {})
-
+'''
 def average_sources(code):
     typep = ('S','C','B')
     ds = DataSource.objects.filter(name=code)
