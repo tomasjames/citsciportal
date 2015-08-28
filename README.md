@@ -4,12 +4,12 @@ Citizen Science Portal
 This project contains Agent Exoplanet.
 
 Changes
-=======
+-------
 
-1). Agent Exoplanet now uses the latest version of Django (Django 1.8).
-2). The combined lightcurve (the lightcurve that combines everybody's data) now plots live, rather than the cron-job based system previous builds used.
-3). The majority of the computation for the combined lightcurve is now done using numpy arrays for speed.
-4). Other miscellaneous optimisations to the code have been made.
+1. Agent Exoplanet now uses the latest version of Django (Django 1.8).
+2. The combined lightcurve (the lightcurve that combines everybody's data) now plots live, rather than the cron-job based system previous builds used.
+3. The majority of the computation for the combined lightcurve is now done using numpy arrays for speed.
+4. Other miscellaneous optimisations to the code have been made.
 
 Agent Exoplanet
 ---------------
