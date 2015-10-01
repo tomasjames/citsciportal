@@ -16,8 +16,21 @@ media/data/*
 app/agentex/static/data/*
 app/agentex/cython/*
 app/agentex/build/*
+<<<<<<< Updated upstream
+data/*
+*.zip
+*.gz
+
+=======
+>>>>>>> Stashed changes
 
 citsci.db
 *.sql
 
 docker-compose.yml
+
+data/corot18b.tar.gz
+
+data/Wasp12b-20120217.zip
+
+data/wasp13b_20131227.zip
